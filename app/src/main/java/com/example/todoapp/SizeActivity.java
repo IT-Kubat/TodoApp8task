@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 public class SizeActivity extends AppCompatActivity {
 
-    private TextView mInfoTextView;
-
     EditText editText;
     float size;
     Intent intent = new Intent();

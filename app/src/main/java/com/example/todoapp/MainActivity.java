@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         editText = findViewById(R.id.edit_text);
         initFile(editText.getText().toString());
+        super.onBackPressed();
     }
 }
