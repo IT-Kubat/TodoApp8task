@@ -1,13 +1,20 @@
 package com.example.todoapp;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.todoapp.ui.OnBoard.BoardFragment;
+import com.example.todoapp.ui.OnBoard.OnBoardActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.os.Environment;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,14 +29,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.EditText;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private final int RC_WRITE_EXTERNAL = 101;
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        boolean isShown = Prefs.getInstance(this).isShown();
+        if (!isShown){
+            startActivity(new Intent(this, OnBoardActivity.class));
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,13 +75,52 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-    }
+        }
+    @AfterPermissionGranted(RC_WRITE_EXTERNAL)
+    private void initFile(String content) {
+        String permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        if (EasyPermissions.hasPermissions(this, permission)) {
+            File folder = new File(Environment.getExternalStorageDirectory(), "Todo");
+            folder.mkdir();
+            File file = new File(folder,"note.txt");
+            try {
+                file.createNewFile();
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                fileOutputStream.write(content.getBytes());
+                fileOutputStream.close();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        } else {
+            EasyPermissions.requestPermissions(this,"Разреши!", RC_WRITE_EXTERNAL, permission);
 
+        }
+
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch ( item.getItemId()){
+            case R.id.action_settings:
+            Prefs.getInstance(this).Clear();
+            break;
+            case R.id.action_text_size:
+                startActivityForResult(new Intent(MainActivity.this, SizeActivity.class),100);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -68,11 +130,26 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    @Override
+    @Override()
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode ==100){
             String title = data.getStringExtra("title");
         }
+
+
+    }
+
+
+        public void onclick(MenuItem item) {
+        Prefs.getInstance(this).Clear();
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        editText = findViewById(R.id.edit_text);
+        initFile(editText.getText().toString());
     }
 }

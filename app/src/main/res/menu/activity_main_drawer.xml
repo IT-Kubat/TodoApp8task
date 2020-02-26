@@ -15,9 +15,9 @@
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_examples"
-            android:title="Examples" />
+            android:title="Notes" />
         <item
-            android:id="@+id/nav_tools"
+            android:id="@+id/nav_samples"
             android:icon="@drawable/ic_samples"
             android:title="Samples" />
     </group>
@@ -25,11 +25,11 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_contacts"
                 android:icon="@drawable/ic_contacts"
                 android:title="Contacts" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_e-mail"
                 android:icon="@drawable/ic_email"
                 android:title="E-mail" />
         </menu>

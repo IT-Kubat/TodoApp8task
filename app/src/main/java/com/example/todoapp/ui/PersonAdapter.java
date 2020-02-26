@@ -24,6 +24,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         list.add("Kubat");
         list.add("Kunduz");
         list.add("Mirkamil");
+        list.add("Aiyma");
     }
     @NonNull
     @Override
