@@ -20,6 +20,7 @@ public class SizeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_size);
         editText = findViewById(R.id.edit_size);
+        editText.setVisibility(View.INVISIBLE);
 
         RadioButton redRadioButton = (RadioButton)findViewById(R.id.Shrift_14);
         redRadioButton.setOnClickListener(radioButtonClickListener);
@@ -48,7 +49,7 @@ public class SizeActivity extends AppCompatActivity {
                     setResult(RESULT_OK,intent);
                     finish();
                     break;
-                case R.id.Shrift_28: editText.setTextSize(24);
+                case R.id.Shrift_28: editText.setTextSize(28);
                     size = editText.getTextSize();
                     intent.putExtra("size", size);
                     setResult(RESULT_OK,intent);
