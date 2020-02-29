@@ -40,6 +40,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity {
 
+    private int RequestCode = 200;
+
     private  float size;
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+//        editText.setTextSize(size);
         }
     @AfterPermissionGranted(RC_WRITE_EXTERNAL)
     private void initFile(String content) {
@@ -122,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             Prefs.getInstance(this).Clear();
             break;
             case R.id.action_text_size:
-                startActivityForResult(new Intent(MainActivity.this, SizeActivity.class),100);
+                startActivityForResult(new Intent(MainActivity.this, SizeActivity.class),RequestCode);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -137,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     @Override()
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode ==100){
+        if (resultCode == RESULT_OK && requestCode == RequestCode){
             String title = data.getStringExtra("title");
             size = data.getFloatExtra("size", 0);
 
