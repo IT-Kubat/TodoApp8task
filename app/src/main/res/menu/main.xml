@@ -7,11 +7,13 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never"
-        android:onClick="onclick"
-      />
+        android:onClick="onclick"/>
+
     <item
         android:id="@+id/action_text_size"
-        android:title="Edit text size"/>
+        android:orderInCategory="100"
+        android:title="Edit text size"
+        app:showAsAction="never"/>
 
 
 

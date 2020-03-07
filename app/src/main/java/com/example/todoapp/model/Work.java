@@ -14,7 +14,10 @@ public class Work implements Serializable {
     private String title;
     private String description;
 
-    public Work() {
+    public Work(String title, String description) {
+
+        this.title = title;
+        this.description = description;
 
     }
 

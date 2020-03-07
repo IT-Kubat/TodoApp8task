@@ -41,9 +41,15 @@ public class GalleryFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.setOnClickListener(new OnItemClickListener() {
             @Override
-            public void itemClick(String position) {
-                Toast.makeText(getContext(), position+"", Toast.LENGTH_SHORT).show();
+            public void itemClick(int position) {
+
             }
-        });
+
+            @Override
+            public void itemLongClick(int position) {
+
+            }
+
+            });
     }
 }

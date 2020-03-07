@@ -3,6 +3,7 @@ package com.example.todoapp.ui;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,7 +54,7 @@ holder.bind(list.get(position));
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.itemClick(list.get(getAdapterPosition()));
+                    listener.itemClick(getAdapterPosition());
                 }
             });
         }

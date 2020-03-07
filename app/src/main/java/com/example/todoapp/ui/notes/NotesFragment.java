@@ -1,5 +1,7 @@
 package com.example.todoapp.ui.notes;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -25,6 +27,7 @@ import java.io.IOException;
 public class NotesFragment extends Fragment {
 
     private EditText editText;
+    private File file;
 
         public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,6 +39,16 @@ public class NotesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         editText = view.findViewById(R.id.editText);
+        File folder = new File(Environment.getExternalStorageDirectory(),"TodoApp");
+        folder.mkdir();
+        file = new File(folder, "note.txt");
+        try {
+            String text = FileUtils.readFileToString(file, "utf-8");
+            editText.setText(text);
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -48,9 +61,6 @@ public class NotesFragment extends Fragment {
     private void save(){
 
             String text = editText.getText().toString();
-        File folder = new File(Environment.getExternalStorageDirectory(),"TodoApp");
-        folder.mkdir();
-        File file = new File(folder, "note.txt");
         try {
             FileUtils.writeStringToFile(file, text, "utf-8");
         } catch (IOException e){
@@ -58,5 +68,16 @@ public class NotesFragment extends Fragment {
         }
 
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("TAG","onActivityResult Fragment");
+        if (resultCode == Activity.RESULT_OK && resultCode ==101) {
+            int size = data.getIntExtra("size", 14);
+            editText.setTextSize(size);
+
+        }
     }
 }

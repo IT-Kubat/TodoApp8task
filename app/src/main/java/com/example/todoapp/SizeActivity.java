@@ -7,9 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
-public class SizeActivity extends AppCompatActivity {
+public class SizeActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
 
     EditText editText;
     float size;
@@ -19,6 +20,8 @@ public class SizeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_size);
+        RadioGroup radioGroup = findViewById(R.id.radio_group);
+        radioGroup.setOnCheckedChangeListener(this);
         editText = findViewById(R.id.edit_size);
         editText.setVisibility(View.INVISIBLE);
 
@@ -30,7 +33,6 @@ public class SizeActivity extends AppCompatActivity {
 
         RadioButton blueRadioButton = (RadioButton)findViewById(R.id.Shrift_28);
         blueRadioButton.setOnClickListener(radioButtonClickListener);
-
         }
         View.OnClickListener radioButtonClickListener = new View.OnClickListener() {
         @Override
@@ -60,6 +62,27 @@ public class SizeActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        int size = 14;
+        switch (checkedId){
+            case R.id.Shrift_14:
+                size = 14;
+                break;
+            case R.id.Shrift_22:
+                size = 22;
+                break;
+            case R.id.Shrift_28:
+                size = 28;
+                break;
+        }
+
+        Intent intent = new Intent();
+        intent.putExtra("size", size);
+        setResult(RESULT_OK,intent);
+        finish();
+    }
 }
 
 

@@ -10,18 +10,21 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.os.Environment;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int RequestCode = 200;
 
-    private  float size;
+    private float size;
 
     private AppBarConfiguration mAppBarConfiguration;
     private final int RC_WRITE_EXTERNAL = 101;
@@ -53,11 +56,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boolean isShown = Prefs.getInstance(this).isShown();
-        if (!isShown){
+        if (!isShown) {
             startActivity(new Intent(this, OnBoardActivity.class));
             finish();
             return;
-        }
+
+                    }
+//        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+//            startActivity(new Intent(this, PhoneActivity.class));
+//            finish();
+//            return;
+//        }
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         //editText.setText(size+"");
@@ -66,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(MainActivity.this, FormActivity.class),100);
+                startActivityForResult(new Intent(MainActivity.this, FormActivity.class), 100);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -82,29 +91,31 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 //        editText.setTextSize(size);
-        }
+    }
+
     @AfterPermissionGranted(RC_WRITE_EXTERNAL)
     private void initFile(String content) {
         String permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
         if (EasyPermissions.hasPermissions(this, permission)) {
             File folder = new File(Environment.getExternalStorageDirectory(), "Todo");
             folder.mkdir();
-            File file = new File(folder,"note.txt");
+            File file = new File(folder, "note.txt");
             try {
                 file.createNewFile();
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
                 fileOutputStream.write(content.getBytes());
                 fileOutputStream.close();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            EasyPermissions.requestPermissions(this,"Разреши!", RC_WRITE_EXTERNAL, permission);
+            EasyPermissions.requestPermissions(this, "Разреши!", RC_WRITE_EXTERNAL, permission);
 
         }
 
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -112,20 +123,21 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch ( item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_settings:
-            Prefs.getInstance(this).Clear();
-            break;
+                Prefs.getInstance(this).Clear();
+                break;
             case R.id.action_text_size:
-                startActivityForResult(new Intent(MainActivity.this, SizeActivity.class),RequestCode);
+                startActivityForResult(new Intent(MainActivity.this, SizeActivity.class), RequestCode);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -140,18 +152,18 @@ public class MainActivity extends AppCompatActivity {
     @Override()
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == RequestCode){
+        Log.e("TAG", "onActivityResult Main");
+        for (Fragment fragment : getSupportFragmentManager().getFragments()){
+            fragment.onActivityResult(requestCode, resultCode,data);
+        }
+        if (resultCode == RESULT_OK && requestCode == RequestCode) {
             String title = data.getStringExtra("title");
             size = data.getFloatExtra("size", 0);
-
-
         }
-
-
     }
 
 
-        public void onclick(MenuItem item) {
+    public void onclick(MenuItem item) {
         Prefs.getInstance(this).Clear();
         finish();
     }

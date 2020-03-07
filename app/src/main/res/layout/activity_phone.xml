@@ -6,31 +6,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".FormActivity">
+    tools:context=".PhoneActivity">
 
     <EditText
-        style="@style/EditTextStyle"
-        android:id="@+id/editTitle"
+        android:id="@+id/editPhone"
+        style="@style/Base.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/editDesk"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/bg_edit"
-        android:hint="Desc"
-        android:padding="8dp"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_button"
-        android:textColor="#FFFFFF"
-        android:text="Save"
-        android:onClick="onClick"/>
+        />
 
 
 
