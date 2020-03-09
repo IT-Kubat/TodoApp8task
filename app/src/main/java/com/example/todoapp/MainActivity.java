@@ -62,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
             return;
 
                     }
-//        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-//            startActivity(new Intent(this, PhoneActivity.class));
-//            finish();
-//            return;
-//        }
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            startActivity(new Intent(this, PhoneActivity.class));
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         //editText.setText(size+"");
