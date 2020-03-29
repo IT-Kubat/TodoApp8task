@@ -21,6 +21,9 @@ public class Work implements Serializable {
 
     }
 
+    public Work() {
+    }
+
     public long getId() {
         return id;
     }

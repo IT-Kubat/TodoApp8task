@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_examples"
             android:title="Notes" />
         <item
+            android:id="@+id/nav_firebase"
+            android:icon="@drawable/ic_data_usage"
+            android:title="menu_firebase" />
+        <item
             android:id="@+id/nav_samples"
             android:icon="@drawable/ic_samples"
             android:title="Samples" />
