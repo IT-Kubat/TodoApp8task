@@ -1,5 +1,6 @@
 package com.example.todoapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,8 +11,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -19,9 +25,10 @@ public class ProfileActivity extends AppCompatActivity {
     EditText editText;
     private ImageView mImage;
     private Uri mImageUri;
-
     SharedPreferences sharedPreferences;
     public static String myProfile = "MyProfile";
+//    FirebaseStorage firebaseStorage;
+    Button sendToFirebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,21 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     }
+//    private void uploadImage() {
+//
+//        StorageReference reference = FirebaseStorage.getInstance()
+//                .getReference().child("avatars/image1.jpg");
+//        UploadTask task = reference.putFile(mImageUri);
+//        task.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    Toast.makeText(ProfileActivity.this, "ok", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(ProfileActivity.this, "false", Toast.LENGTH_SHORT).show();                }
+//            }
+//        });
+//    }
 
 
     public void onClick(View view) {

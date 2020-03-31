@@ -29,7 +29,7 @@ public class AdapterFirebase extends RecyclerView.Adapter<AdapterFirebase.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.fragment_firebase,parent,false);
+        View view = inflater.inflate(R.layout.list_work,parent,false);
         return new ViewHolder(view);
     }
 
@@ -51,8 +51,8 @@ public class AdapterFirebase extends RecyclerView.Adapter<AdapterFirebase.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleText = itemView.findViewById(R.id.textView_title);
-            descriptionText = itemView.findViewById(R.id.textView_description);
+            titleText = itemView.findViewById(R.id.textTitle);
+            descriptionText = itemView.findViewById(R.id.textDesc);
         }
 
         public void bind(Work work){

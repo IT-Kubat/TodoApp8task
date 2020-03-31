@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
 
         });
         recyclerView.setAdapter(adapter);
-        App.getDatabase().workDao().getAll().observe(this, new Observer<List<Work>>() {
+        App.getDatabase().workDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<Work>>() {
             @Override
             public void onChanged(List<Work> works) {
                 list.clear();
